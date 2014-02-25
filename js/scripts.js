@@ -9,7 +9,7 @@ var Package = {
   } else if (this.weight > 50 && this.weight <= 100) {
      return 60;
   } else {
-    return 'We only ship packages whose weight is less than 100 pounds';
+    return 'Invalid';
   }
 },
   speed: function() {
@@ -19,6 +19,8 @@ var Package = {
       return this.scale(this.weight) + 30;
     } else if (this.shipTime === 'Overnight'){
       return this.scale(this.weight) + 50;
+    } else {
+      return this.scale(this.weight);
     }
   },
   distance: function() {
@@ -37,16 +39,22 @@ $(document).ready(function() {
     event.preventDefault();
 
     var inputWeight = parseInt($('input#weight').val());
-    var inputSpeed = $('input#speed').val();
+    var inputSpeed = $('#speed').val();
     var inputDistance = parseInt($('input#distance').val());
 
     var newPackage = Object.create(Package);
     newPackage.weight = inputWeight;
-    newPackage.speed = inputSpeed;
-    newPackage.distance = inputDistance;
+    newPackage.shipTime = inputSpeed;
+    newPackage.distanceShipped = inputDistance;
 
-    $('.')
-  })
-}
+    if (newPackage.distance() !== 'Invalid') {
+      $('#show-price h2').text("It will cost $" + newPackage.distance() + " to ship.");
+    } else {
+        alert('We only ship packages whose weight is less than 100 pounds')
+    }
+  
+  this.reset();
+});
+});
 
 
